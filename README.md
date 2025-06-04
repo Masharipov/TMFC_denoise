@@ -8,7 +8,7 @@ To run TMFC denoise via GUI enter: tmfc_denoise
 ----------------------------------------------
 Options:
 
-<img src = "denoising/options.PNG" width = 800>
+<img src = "denoising/options.PNG" width = 470>
 
 ----------------------------------------------
 FD plots:
