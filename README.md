@@ -1,21 +1,73 @@
 # TMFC_denoise
-SPM-based toolbox for fMRI task denoising. 
+**TMFC denoise** is a MATLAB toolbox for SPM12/SPM25 for GLM-based denoising (**noise regression**).
 
-Can be run via GUI or command line.
+This toolbox allows you to **add noise regressors** to the original general linear model (GLM), calculate **framewise displacement (FD)**, Derivative of root mean square VARiance over voxelS **(DVARS)**, and **FD-DVARS correlation** before and after denoising. 
 
-To run TMFC denoise via GUI enter: tmfc_denoise
+The updated GLMs can be used for **task activation analysis** or for **task-modulated funcitonal connectivity (TMFC) analysis**.
 
-----------------------------------------------
-Options:
+## Installation
+TMFC denoise is available as a separate toolbox and as part of the **TMFC toolbox** (https://github.com/IHB-IBR-department/TMFC_toolbox).
 
-<img src = "denoising/options.PNG" width = 470>
+1) Add SPM12/SPM25 to your MATLAB path;
+2) Add **TMFC denoise** <ins>OR</ins> **TMFC toolbox** to your MATLAB path (Home --> Set path --> Add with Subfolders --> Select TMFC_denoise <ins>OR</ins> TMFC_toolbox folder);
+3) Enter **tmfc_denoise** in the command window to open TMFC denoise GUI <br/>
+   or <br/>
+   Enter **TMFC** in the command window to open TMFC toolbox GUI, then press **Tools --> Denoise** button.
 
-----------------------------------------------
-FD plots:
+TMFC denoise can be run via GUI or the command line. To run TMFC denoise via the command line, see *tmfc_denoise.m* function.
 
-<img src = "denoising/FD_example.PNG" width = 700>
+## Options
 
-----------------------------------------------
-Results:
+<img src = "illustrations/TMFC_denoise_options.PNG" width = 500>
 
-<img src = "denoising/results_example.png" width = 700>
+
+## Results
+
+<img src = "illustrations/TMFC_denoise_results.PNG" width = 700>
+
+## Functionality of the TMFC denoise toolbox:
+
+- (1) Calculates head motion parameters (temporal derivatives and quadratic
+     terms) (**6HMP, 12HMP, 24HMP**). Temporal derivatives are calculated as backwards differences
+     (Van Dijk et al., 2012). Quadratic terms represent 6 squared motion
+     parameters and 6 squared temporal derivatives (Satterthwaite et al., 2013).
+
+- (2) Calculates **framewise displacement (FD)** as the sum of the absolute values
+     of the derivatives of translational and rotational motion parameters
+     (Power et al., 2012).
+
+- (3) Creates spike regressors based on a user-defined FD threshold (**Spike Regression**). For each
+     flagged time point, a unit impulse function is included in general linear
+     model, which had the value of 1 at that time point and 0 elsewhere
+     (Lemieux et al., 2007; Satterthwaite et al., 2013).
+  
+- (4) Creates **eroded WM and CSF masks**.
+
+- (5) Creates **aCompCor** regressors (Behzadi et al., 2007). Calculates fixed
+     number of principal components (PCs) or variable number of PCs
+     explaining 50% of the signal variability separately for eroded WM
+     and CSF masks (Muschelli et al., 2014).   
+ 
+- (6) Creates **WM/CSF regressors** (Fox and Raichle, 2007). Calculates average
+     BOLD signals separately for eroded WM and CSF masks. Optionally
+     calculates derivatives and quadratic terms (Parkes et al., 2017) (**2PHYS, 4PHYS, 8PHYS**).
+
+- (7) Creates global signal regressor (Fox et al, 2009). Calculates the average
+     BOLD signal for a whole-brain mask. Optionally calculates
+     derivatives and quadratic terms (Parkes et al., 2017) (**GSR, 2GSR, 4GSR**).
+
+- (8) Calculates Derivative of root mean square VARiance over voxelS (**DVARS**).
+     DVARS is computed as the root mean square (RMS) of the differentiated
+     BOLD time series within the GM mask (Muschelli et al., 2014).
+     Calculates **FD/DVARS correlations**. 
+     DVARS is computed before and after noise regression 
+     (for the original and updated GLM, respectively).
+
+- (9) Adds noise regressiors to the original model and estimates it. The noise
+     regressors and the updated model will be stored in the TMFC_denoise subfolder.
+
+- (10) Can use robust weighted least squares (**rWLS**) for model estimation.
+     It assumes that each image has an own variance parameter, i.e. some
+     scans may be disrupted by noise. By choosing this option, SPM will 
+     estimte the noise variances in the first pass and then re-weight each
+     image by the inverse of the variance in the second pass.
