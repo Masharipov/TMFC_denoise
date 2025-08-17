@@ -34,9 +34,11 @@ function output_paths = tmfc_estimate_updated_GLMs(SPM_paths,masks,options)
 
 % Paths to updated GLMs
 %--------------------------------------------------------------------------
-if strcmp(options.motion,'6HMP') && options.spikereg == 0 && sum(options.aCompCor)==0 && strcmp(options.WM_CSF,'none') && strcmp(options.GSR,'none') && options.rWLS == 0
-    output_paths = masks.glm_paths;
+if strcmp(options.motion,'6HMP') && options.spikereg == 0 && sum(options.aCompCor)==0 && strcmp(options.WM_CSF,'none') && strcmp(options.GSR,'none') && options.rWLS == 0 
+    output_paths = [];
     warning('Only 6 motion regressors are selected as noise regressors. New models will not be created.'); return;
+elseif strcmp(options.motion,'6HMP') && options.spikereg == 0 && sum(options.aCompCor)==0 && strcmp(options.WM_CSF,'none') && strcmp(options.GSR,'none') && options.rWLS == 1
+    new_GLM_subfolder = ['GLM_[6HMP]_[rWLS]'];
 elseif (~strcmp(options.motion,'6HMP') || options.spikereg == 1 || options.rWLS == 1) && (sum(options.aCompCor)==0 && strcmp(options.WM_CSF,'none') && strcmp(options.GSR,'none')) 
     new_GLM_subfolder = ['GLM_[' options.motion ']'];
     if options.rWLS == 1; new_GLM_subfolder = strcat(new_GLM_subfolder,'_[rWLS]'); end
@@ -75,6 +77,7 @@ spm('defaults','fmri');
 spm_jobman('initcfg');
 jSub = 0;
 for iSub = 1:length(SPM_paths)
+    % Delete GLM folder, if model has not been estimated:
     if exist(fullfile(output_paths{iSub},'SPM.mat'),'file')
         SPMnew = load(fullfile(output_paths{iSub},'SPM.mat'));
         if ~isfield(SPMnew.SPM,'Vbeta')
@@ -82,8 +85,14 @@ for iSub = 1:length(SPM_paths)
         end
         clear SPMnew
     end
-    if ~exist(fullfile(output_paths{iSub}),'dir')
-        mkdir(fullfile(output_paths{iSub}));
+    
+%     % Delete previosly created GLM folder:
+%     if exist(output_paths{iSub},'dir')
+%         rmdir(output_paths{iSub},'s');
+%     end
+ 
+    if ~exist(output_paths{iSub},'dir')
+        mkdir(output_paths{iSub});
     end
 
     % Specify GLM with noise regressors
@@ -198,7 +207,7 @@ for iSub = 1:length(SPM_paths)
             Conf = []; ConfName = {};
             % HMP
             if ~strcmp(options.motion,'6HMP')
-                Conf = [Conf HMP(jSess).Sess(:,7:end)]; % Start with 7th HMP, as 6HMP is already added
+                Conf = [Conf HMP(jSess).Sess(:,7:end)]; % Start with 7th HMP, since 6HMP is already added
                 C = cell(size(HMP(jSess).Sess(:,7:end),2),1); C(:) = {'HMP'};
                 ConfName = [ConfName; C]; clear C
             end
@@ -276,12 +285,12 @@ for iSub = 1:length(SPM_paths)
             matlabbatch{1}.spm.stats.fmri_spec.mask = {''};
         end
     
-        if strcmp(SPM.xVi.form,'i.i.d')
+        if strcmp(SPM.xVi.form,'i.i.d') || strcmp(SPM.xVi.form,'none')
             matlabbatch{1}.spm.stats.fmri_spec.cvi = 'None';
-        elseif strcmp(SPM.xVi.form,'AR(0.2)')
-            matlabbatch{1}.spm.stats.fmri_spec.cvi = 'AR(1)';
-        else
+        elseif strcmp(SPM.xVi.form,'fast') || strcmp(SPM.xVi.form,'FAST')
             matlabbatch{1}.spm.stats.fmri_spec.cvi = 'FAST';
+        else
+            matlabbatch{1}.spm.stats.fmri_spec.cvi = 'AR(1)';
         end
 
         matlabbatch_2{1}.spm.stats.fmri_est.spmmat(1) = {fullfile(output_paths{iSub},'SPM.mat')};
@@ -324,7 +333,7 @@ if exist('batch','var')
             end
             original_dir = pwd;
             cd(output_paths{1});
-            SPM = tmfc_spm_rwls_spm(SPM);
+            tmfc_spm_rwls_spm(SPM);
             cd(original_dir);
         end
     elseif jSub > 1
@@ -347,21 +356,11 @@ if exist('batch','var')
             if SPM_concat == 1
                 spm_fmri_concatenate(fullfile(batch{iSub}{1}.spm.stats.fmri_spec.dir,'SPM.mat'),concat(iSub).scans);
             end
-            % WLS or rWLS
+            % Check for rWLS
             if options.rWLS == 0
                 spm_jobman('run',batch_2{iSub});
             else
-                SPM = load(fullfile(output_paths{iSub},'SPM.mat')).SPM;
-                SPM.xVi.form = 'wls';
-                nScan=sum(SPM.nscan);
-                for iScan = 1:nScan
-                    SPM.xVi.Vi{iScan} = sparse(nScan,nScan);
-                    SPM.xVi.Vi{iScan}(iScan,iScan) = 1;
-                end
-                original_dir = pwd;
-                cd(output_paths{iSub});
-                SPM = tmfc_spm_rwls_spm(SPM);
-                cd(original_dir);
+                tmfc_rwls(output_paths,iSub);
             end
             try send(D,[]); end % Update waitbar
         end
@@ -371,6 +370,23 @@ end
 end
 
 %==========================================================================
+
+% Estimate rWLS model
+%--------------------------------------------------------------------------
+function tmfc_rwls(output_paths,iSub)
+    SPM = load(fullfile(output_paths{iSub},'SPM.mat')).SPM;
+    SPM.xVi.form = 'wls';
+    nScan=sum(SPM.nscan);
+    for iScan = 1:nScan
+        SPM.xVi.Vi{iScan} = sparse(nScan,nScan);
+        SPM.xVi.Vi{iScan}(iScan,iScan) = 1;
+    end
+    original_dir = pwd;
+    cd(output_paths{iSub});
+    tmfc_spm_rwls_spm(SPM);
+    cd(original_dir);
+end
+
 % Waitbar for parallel mode
 %--------------------------------------------------------------------------
 function tmfc_parfor_waitbar(waitbarHandle,iterations,firstsub)
