@@ -1,4 +1,6 @@
 # TMFC_denoise
+![GitHub License](https://img.shields.io/github/license/Masharipov/TMFC_denoise)
+
 **TMFC denoise** is a MATLAB toolbox for SPM12/SPM25 for GLM-based denoising (**noise regression**).
 
 This toolbox allows you to **add noise regressors** to the original general linear model (GLM), calculate **framewise displacement (FD)**, Derivative of root mean square VARiance over voxelS **(DVARS)**, and **FD-DVARS correlation** before and after denoising. 
