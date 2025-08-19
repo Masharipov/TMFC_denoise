@@ -7,6 +7,8 @@ This toolbox allows you to **add noise regressors** to the original general line
 
 The updated GLMs can be used for **task activation analysis** or for **task-modulated funcitonal connectivity (TMFC) analysis**.
 
+For detailed documentation, please see: https://tmfc-denoise.readthedocs.io
+
 ## Installation
 TMFC denoise is available as a separate toolbox and as part of the **TMFC toolbox** (https://github.com/IHB-IBR-department/TMFC_toolbox).
 
