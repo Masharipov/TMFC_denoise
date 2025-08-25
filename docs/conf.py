@@ -13,16 +13,19 @@ release = 'v1.3'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+import os
+import sys 
 
-extensions = []
+root_dir = os.path.abspath("../..")   
+matlab_src_dir = root_dir
+sys.path.insert(0, root_dir)
 
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+extensions = ["sphinxcontrib.matlab", "sphinx.ext.autodoc"]
 
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+
