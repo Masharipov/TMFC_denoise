@@ -1,7 +1,7 @@
 # TMFC_denoise
 ![GitHub License](https://img.shields.io/github/license/Masharipov/TMFC_denoise)
 
-**TMFC denoise** is a MATLAB toolbox for SPM12/SPM25 for GLM-based denoising (**noise regression**).
+**TMFC_denoise** is a MATLAB toolbox for SPM12/SPM25 for GLM-based denoising (**noise regression**).
 
 This toolbox allows you to **add noise regressors** to the original general linear model (GLM), calculate **framewise displacement (FD)**, Derivative of root mean square VARiance over voxelS **(DVARS)**, and **FD-DVARS correlation** before and after denoising. 
 
@@ -10,15 +10,15 @@ The updated GLMs can be used for **task activation analysis** or for **task-modu
 For detailed documentation, please see: https://tmfc-denoise.readthedocs.io
 
 ## Installation
-TMFC denoise is available as a separate toolbox and as part of the **TMFC toolbox** (https://github.com/IHB-IBR-department/TMFC_toolbox).
+TMFC_denoise is available as a separate toolbox and as part of the **TMFC toolbox** (https://github.com/IHB-IBR-department/TMFC_toolbox).
 
 1) Add SPM12/SPM25 to your MATLAB path;
-2) Add **TMFC denoise** <ins>OR</ins> **TMFC toolbox** to your MATLAB path (Home --> Set path --> Add with Subfolders --> Select TMFC_denoise <ins>OR</ins> TMFC_toolbox folder);
-3) Enter **tmfc_denoise** in the command window to open TMFC denoise GUI <br/>
+2) Add **TMFC_denoise** <ins>OR</ins> **TMFC_toolbox** to your MATLAB path (Home --> Set path --> Add with Subfolders --> Select TMFC_denoise <ins>OR</ins> TMFC_toolbox folder);
+3) Enter **TMFC_denoise** in the command window to open TMFC_denoise GUI <br/>
    or <br/>
    Enter **TMFC** in the command window to open TMFC toolbox GUI, then press **Tools --> Denoise** button.
 
-TMFC denoise can be run via GUI or the command line. To run TMFC denoise via the command line, see *tmfc_denoise.m* function.
+TMFC_denoise can be run via GUI or the command line. To run TMFC_denoise via the command line, see *tmfc_denoise.m* function.
 
 ## Options
 
@@ -29,7 +29,7 @@ TMFC denoise can be run via GUI or the command line. To run TMFC denoise via the
 
 <img src = "illustrations/TMFC_denoise_results.PNG" width = 700>
 
-## Functionality of the TMFC denoise toolbox:
+## Functionality of the TMFC_denoise toolbox:
 
 - (1) Calculates head motion parameters (temporal derivatives and quadratic
      terms) (**6HMP, 12HMP, 24HMP**). Temporal derivatives are calculated as backwards differences
