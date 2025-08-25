@@ -1,6 +1,6 @@
-function output_paths = tmfc_denoise(SPM_paths,options,struct_paths,funct_paths,display_FD,estimate_GLMs,clear_all)
+function output_paths = TMFC_denoise(SPM_paths,options,struct_paths,funct_paths,display_FD,estimate_GLMs,clear_all)
 
-% =====[ Task-Modulated Functional Connectivity Denoise Toolbox v1.3 ]=====
+% =[ Task-Modulated Functional Connectivity (TMFC) Denoise Toolbox v1.3 ]=
 % 
 % The TMFC denoise toolbox updates a selected general linear model with
 % the addition of noise regressors. It can be used prior to TMFC analysis 
