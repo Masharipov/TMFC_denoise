@@ -2,7 +2,7 @@ Functions
 **********
 
 .. toctree::
-   :maxdepth: 2       
-
+   :maxdepth: 2
+        
    functions_denoising
    
