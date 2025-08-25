@@ -18,7 +18,7 @@ TMFC_denoise is available as a separate toolbox and as part of the **TMFC toolbo
    or <br/>
    Enter **TMFC** in the command window to open TMFC toolbox GUI, then press **Tools --> Denoise** button.
 
-TMFC_denoise can be run via GUI or the command line. To run TMFC_denoise via the command line, see *TMFC_denoise.m* function.
+TMFC_denoise can be run via GUI or the command line. To run TMFC_denoise via the command line, see [*TMFC_denoise.m*](TMFC_denoise.m) function.
 
 ## Options
 
