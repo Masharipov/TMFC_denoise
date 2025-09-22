@@ -1,5 +1,6 @@
 # TMFC_denoise
 ![GitHub License](https://img.shields.io/github/license/Masharipov/TMFC_denoise)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17176264.svg)](https://doi.org/10.5281/zenodo.17176264)
 
 **TMFC_denoise** is a MATLAB toolbox for SPM12/SPM25 for GLM-based denoising (**noise regression**).
 
