@@ -1,3 +1,4 @@
 sphinx
-sphinxcontrib-matlabdomain
 sphinx-rtd-theme==3.0.2
+sphinxcontrib-svg2pdfconverter
+cairosvg

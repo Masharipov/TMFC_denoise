@@ -1,6 +1,6 @@
 function options = tmfc_denoise_options_GUI()
 
-% =[ Task-Modulated Functional Connectivity (TMFC) Denoise Toolbox v1.4 ]=
+% =[Task-Modulated Functional Connectivity (TMFC) Denoise Toolbox v1.4.1]=
 % 
 % Opens a GUI to select denoising options.
 %
@@ -38,17 +38,17 @@ options.parallel = 0;
 %-Options GUI
 %--------------------------------------------------------------------------
 set_HMP = {'Add 6 temporal derivatives and 12 quadratic terms (24HMP)','Add 6 temporal derivatives (12HMP)','Use standard 6 head motion parameters (6HMP)'};
-set_FD_rot = {'Radians (e.g., SPM12, FSL, fMRIPrep)','Degrees (e.g., HCP, AFNI)'};
+set_FD_rot = {'Radians (e.g., SPM, FSL, fMRIPrep)','Degrees (e.g., HCP, AFNI)'};
 set_DVARS = {'Calculate DVARS and FD-DVARS correlations','None'};
 set_ACC = {'Add fixed number of aCompCor regressors','Add regressors explaining 50% of variance in WM/CSF (aCompCor50)','None'};
 set_ACC_PO = {'Pre-orthogonalize w.r.t. HMP and HPF', 'None'};
 set_rWLS = {'None', 'Apply rWLS for model estimation'};
 set_SR = {'None','Add spike regressors'};
-set_WM_CSF = {'None','Add WM and CSF signals (2Phys)','Add WM and CSF signals along with their temporal derivatives (4Phys)','Add WM and CSF signals, 2 derivatives and 4 quadratic terms (8Phys)'};
-set_GSR = {'None','Add whole-brain signal (GSR)','Add whole-brain signal and its temporal derivative (2GSR)','Add whole-brain signal, its temporal derivative and 2 quadratic terms (4GSR)'};
+set_WM_CSF = {'None','Add WM and CSF signals (2Phys)','Add WM and CSF signals along with their temporal derivatives (4Phys)','Add WM and CSF signals, 2 derivatives, and 4 quadratic terms (8Phys)'};
+set_GSR = {'None','Add whole-brain signal (GSR)','Add whole-brain signal and its temporal derivative (2GSR)','Add whole-brain signal, its temporal derivative, and 2 quadratic terms (4GSR)'};
 set_PAR = {'None','Enable parallel computations'};
 
-tmfc_DN_GUI = figure('Name','TMFC denoise v1.4','MenuBar', 'none', 'ToolBar', 'none','NumberTitle', 'off', ...
+tmfc_DN_GUI = figure('Name','TMFC denoise v1.4.1','MenuBar', 'none', 'ToolBar', 'none','NumberTitle', 'off', ...
     'Units', 'normalized', 'Position', [0.345 0.062 0.310 0.850], 'color', 'w', 'Tag', 'TMFC_DN_GUI','resize','on', ...
     'CloseRequestFcn',@close_options_GUI);
 
@@ -214,7 +214,7 @@ function export_options(~,~)
 
     FD_select_2{1} = get(DN_FD_pop_2,'String');
     FD_select_2{2} = get(DN_FD_pop_2,'Value');            
-    if strcmp(FD_select_2{1}{FD_select_2{2}},'Radians (e.g., SPM12, FSL, fMRIPrep)')
+    if strcmp(FD_select_2{1}{FD_select_2{2}},'Radians (e.g., SPM, FSL, fMRIPrep)')
     	options.rotation_unit = 'rad';
     elseif strcmp(FD_select_2{1}{FD_select_2{2}},'Degrees (e.g., HCP, AFNI)')
     	options.rotation_unit = 'deg';                   
@@ -282,7 +282,7 @@ function export_options(~,~)
     	options.WM_CSF = '2Phys';        
     elseif strcmp(WM_CSM_select{1}{WM_CSM_select{2}},'Add WM and CSF signals along with their temporal derivatives (4Phys)')
     	options.WM_CSF = '4Phys';        
-    elseif strcmp(WM_CSM_select{1}{WM_CSM_select{2}},'Add WM and CSF signals, 2 derivatives and 4 quadratic terms (8Phys)')
+    elseif strcmp(WM_CSM_select{1}{WM_CSM_select{2}},'Add WM and CSF signals, 2 derivatives, and 4 quadratic terms (8Phys)')
     	options.WM_CSF = '8Phys';                   
     end
     clear WM_CSM_select    
@@ -296,7 +296,7 @@ function export_options(~,~)
     	options.GSR = 'GSR';        
     elseif strcmp(GSR_select{1}{GSR_select{2}},'Add whole-brain signal and its temporal derivative (2GSR)')
     	options.GSR = '2GSR';        
-    elseif strcmp(GSR_select{1}{GSR_select{2}},'Add whole-brain signal, its temporal derivative and 2 quadratic terms (4GSR)')
+    elseif strcmp(GSR_select{1}{GSR_select{2}},'Add whole-brain signal, its temporal derivative, and 2 quadratic terms (4GSR)')
     	options.GSR = '4GSR';                   
     end
     clear GSR_select
@@ -319,14 +319,14 @@ delete(tmfc_DN_GUI);
 end
 function tmfc_denoise_help()
 
-HMP_str = {'Motion parameters are taken from the SPM.mat file (user-specified regressors of no interest; see SPM.Sess.C.C). Temporal derivatives are computed as backward differences (Van Dijk et al., 2012). Quadratic terms comprise 6 squared motion parameters and 6 squared temporal derivatives (Satterthwaite et al., 2013). In SPM, HCP, and fMRIPrep the first three motion regressors are translations; in FSL and AFNI the first three are rotations. Adding confound regressors in the SPM batch changes the indices of the motion regressors defined via "Multiple regressors" *.txt/*.mat file (they appear last in SPM.Sess.C).'};
+HMP_str = {'Motion parameters are taken from the SPM.mat file (user-specified regressors of no interest; see SPM.Sess.C.C). Temporal derivatives are computed as backward differences (Van Dijk et al., 2012). Quadratic terms comprise 6 squared motion parameters and 6 squared temporal derivatives (Satterthwaite et al., 2012). In SPM, HCP, and fMRIPrep the first three motion regressors are translations; in FSL and AFNI the first three are rotations. Adding confound regressors in the SPM batch changes the indices of the motion regressors defined via "Multiple regressors" *.txt/*.mat file (they appear last in SPM.Sess.C).'};
 FD_str = {'FD is computed at each time point as the sum of the absolute values of the derivatives of translational and rotational motion parameters (Power et al., 2012).'};
 DVARS_str = {'DVARS is computed as the root mean square of the differentiated BOLD time series within the GM mask, before and after denoising (Muschelli et al., 2014). Additionally, the FD-DVARS correlation is computed. A low FD-DVARS correlation is expected if denoising is successful.'};
-AA_str = {'Extract non-neuronal, noise-related principal components (PCs) from WM and CSF signals (Behzadi et al., 2007; Muschelli et al., 2014). This approach performs well in relatively low-motion samples (Parkes et al., 2017). WM and CSF signals can be pre-orthogonalized w.r.t. high-pass filter (HPF) regressors and head motion parameters to improve predictive power (Mascali et al., 2020).'};
+AA_str = {'Extract non-neuronal, noise-related principal components (PCs) from WM and CSF signals (Behzadi et al., 2007; Muschelli et al., 2014). This approach performs well in relatively low-motion samples (Parkes et al., 2017). WM and CSF signals can be pre-orthogonalized w.r.t. high-pass filter (HPF) regressors and head motion parameters to improve predictive power (Mascali et al., 2021).'};
 rWLS_str = {'In the first pass, the rWLS algorithm estimates the noise variance of each image. In the second pass, images are weighted by 1/variance rather than being excluded by an arbitrary threshold. This yields a "soft" down-weighting: the higher an image''s variance, the smaller its influence on the results (Diedrichsen and Shadmehr, 2005).'};
-SR_str = {'For each flagged time point, a unit impulse (1 at that time point, 0 elsewhere) is included as a spike regressor (Lemieux et al., 2007; Satterthwaite et al., 2013). Spike regression combined with WM/CSF regression performs well in high-motion samples (Parkes et al., 2017).'};
+SR_str = {'For each flagged time point, a unit impulse (1 at that time point, 0 elsewhere) is included as a spike regressor (Lemieux et al., 2007; Satterthwaite et al., 2012). Spike regression combined with WM/CSF regression performs well in high-motion samples (Parkes et al., 2017).'};
 WM_CSM_str = {'Extract average WM/CSF signals to account for physiological fluctuations of non-neuronal origin (Fox et al., 2005). Optionally, calculate derivatives, squares, and squared derivatives (Parkes et al., 2017).'};
-GSR_str = {'Extract the average whole-brain signal to account for head motion and physiological fluctuations of non-neuronal origin (Fox et al., 2005, 2009). Optionally calculate derivatives, squares, and squared derivatives (Parkes et al., 2017). Note that GSR may also remove BOLD signal fluctuations of neuronal origin (Chen et al., 2012) and can introduce spurious negative correlations (Murphy et al., 2009).'};
+GSR_str = {'Extract the average whole-brain signal to account for head motion and physiological fluctuations of non-neuronal origin (Fox et al., 2005, 2009). Optionally calculate derivatives, squares, and squared derivatives (Parkes et al., 2017). Note that GSR may also remove BOLD signal fluctuations of neuronal origin (Chen et al., 2012) and can introduce spurious negative correlations (Murphy et al., 2008).'};
 
 tmfc_DN_help = figure('Name','TMFC denoise: Help','MenuBar', 'none', 'ToolBar', 'none','NumberTitle', 'off', 'Units', 'norm', 'Position', [0.3 0.065 0.40 0.850], 'color', 'w', 'Tag', 'tmfc_DN_help','resize','on','WindowStyle','Modal');
 movegui(tmfc_DN_help, 'center');
