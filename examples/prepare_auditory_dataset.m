@@ -95,8 +95,6 @@ spm_jobman('run',matlabbatch);
 %% GLM SPECIFICATION, ESTIMATION, INFERENCE, RESULTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-f = spm_select('FPList', fullfile(data_path,'fM00223'), '^swf.*\.img$');
-
 clear matlabbatch
 
 % Output Directory
@@ -109,7 +107,7 @@ matlabbatch{1}.cfg_basicio.file_dir.dir_ops.cfg_mkdir.name = 'GLM';
 matlabbatch{2}.spm.stats.fmri_spec.dir = cellstr(fullfile(data_path,'GLM'));
 matlabbatch{2}.spm.stats.fmri_spec.timing.units = 'scans';
 matlabbatch{2}.spm.stats.fmri_spec.timing.RT = 7;
-matlabbatch{2}.spm.stats.fmri_spec.sess.scans = cellstr(f);
+matlabbatch{2}.spm.stats.fmri_spec.sess.scans = cellstr(spm_file(f,'prefix','sw'));
 matlabbatch{2}.spm.stats.fmri_spec.sess.cond.name = 'active';
 matlabbatch{2}.spm.stats.fmri_spec.sess.cond.onset = 6:12:84;
 matlabbatch{2}.spm.stats.fmri_spec.sess.cond.duration = 6;
