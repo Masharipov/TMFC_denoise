@@ -93,7 +93,7 @@ needs to be changed to ``project`` — the parent folder with ``ANAT`` subfolder
        │   │   │           • unsmoothed + normalized + realigned
        │   │   └── ses-02/ ...
        │   └── sub-02/ ...
-       └── firstlevel-spm/  <-- [Parent folder with ANAT (BY DEFAULT)](Needs to be changed!)
+       └── firstlevel-spm/<-[Parent folder with ANAT (BY DEFAULT)](Needs to be changed)
            ├── sub-01/   <--------------------------- [Selected subject folder]
            │   ├── GLM-01/
            │   │   ├── SPM.mat   <--------------------- [Selected SPM.mat file]
@@ -129,7 +129,7 @@ needs to be changed to ``project/nifti`` — the parent folder with ``ANAT`` sub
    │  │     │     • unsmoothed + normalized + realigned
    │  │     └─ sess-02/ ...
    │  └─ sub-02/ ...
-   └─ firstlevel-spm/  <-- [Parent folder with ANAT subfolders (BY DEFAULT)](Needs to be changed!)
+   └─ firstlevel-spm/ <-------[Parent folder (BY DEFAULT)](Needs to be changed!)
       ├─ sub-01/   <---------------------------------- [Selected subject folder]
       │  ├─ GLM-01/
       │  │  ├─ SPM.mat   <------------------------------ [Selected SPM.mat file]

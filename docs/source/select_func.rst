@@ -31,18 +31,19 @@ Images can be either ``*.img``/``*.hdr`` (3D) or ``*.nii`` (3D/4D). The ``*.nii.
 **NOTE:** You can also try applying the text filter without changing folders.
 
   • If you do NOT select a new parent folder (FUNC root), the toolbox will
-    use the same parent directory as the STAT folder (SPM.mat).
+    use the same parent directory as the STAT folder (`SPM.mat`).
 
   • If you do NOT select a FUNC subfolder for the first subject, the toolbox
-    will attempt to use the same relative structure as in SPM.xY.VY paths.
+    will attempt to use the same relative structure as in `SPM.xY.VY` paths.
 
 In both cases, the search will be performed automatically using paths
-derived from the original SPM.mat configuration, so it may still find the
+derived from the original `SPM.mat` configuration, so it may still find the
 correct functional files — provided their locations have not changed.
 
 Sessions/runs:
-• Layout sub-01/func/sess-* → select func as the FUNC subfolder.
-• Layout sub-01/ses-*/func → leave the subfolder unselected (or select the subject folder); the toolbox will resolve each session/run automatically.
+
+  • Layout `sub-01/func/sess-*` → select func as the FUNC subfolder.
+  • Layout `sub-01/ses-*/func` → leave the subfolder unselected (or select the subject folder); the toolbox will resolve each session/run automatically.
 
 If the GLMs were **already specified for unsmoothed images**, simply press: :menuselection:`Preserve functional image paths from the SPM.mat files`
 
@@ -70,12 +71,12 @@ In this case, there is no need to change the parent folder to select functional 
       │  ├─ anat/   
       │  │  ├─ *T1*.nii  
       │  │  └─ *T1*.nii derivatives 
-      │  ├─ func/  <------------------- [Select the FUNC subfolder for the first subject] (1)
+      │  ├─ func/  <--------------- [Select the FUNC subfolder for the first subject] (1)
       │  │  ├─ sess-01/
       │  │  │  ├─ Unprocessed functional files (*.nii)
       │  │  │  └─ Preprocessed functional files:
-      │  │  │       • smoothed + normalized + realigned (e.g., swar*.nii)
-      │  │  │       • unsmoothed + norm. + real. (e.g., war*.nii) <-- [Apply text filter] (2)
+      │  │  │     •smoothed + normalized + realigned (e.g., swar*.nii)
+      │  │  │     •unsmoothed + norm. + real. (e.g., war*.nii) <-- [Apply text filter](2)
       │  │  └─ sess-02/ ...
       │  └─ stat/       # First-level models (one folder per GLM)
       │     ├─ GLM-01/
@@ -106,16 +107,16 @@ needs to be changed to ``project/derivatives/fmriprep`` — the parent folder wi
    │   └── ses-02/ ...
    ├── sub-02/ ...
    └── derivatives/
-       ├── fmriprep/   <-------------- [Select parent folder (contains sub-*/ses-*/func)] (1)
+       ├── fmriprep/   <---------- [Select parent folder (contains sub-*/ses-*/func)] (1)
        │   ├── sub-01/
        │   │   ├── ses-01/   
        │   │   │   └── func/ 
        │   │   │       └── Preprocessed functional files:
-       │   │   │           • smoothed + normalized + realigned
-       │   │   │           • unsmoothed + normalized + realigned <--- [Apply text filter] (2)
+       │   │   │          •smoothed + normalized + realigned
+       │   │   │          •unsmoothed + norm. + real. <---------- [Apply text filter] (2)
        │   │   └── ses-02/ ...
        │   └── sub-02/ ...
-       └── firstlevel-spm/  <--- [Parent folder with FUNC (BY DEFAULT)](Needs to be changed!)
+       └── firstlevel-spm/ <-[Parent folder with FUNC (BY DEFAULT)](Needs to be changed!)
            ├── sub-01/   <------------------------------------- [Selected subject folder]
            │   ├── GLM-01/
            │   │   ├── SPM.mat   <------------------------------- [Selected SPM.mat file]
@@ -138,12 +139,12 @@ needs to be changed to ``project/nifti`` — the parent folder with ``FUNC`` sub
 
    project/
    ├─ rawdata/   # DICOM
-   ├─ nifti/   <---------------- [Select parent folder (contains sub-*/ses-*/func)]  (1)
+   ├─ nifti/   <---------------- [Select parent folder (contains sub-*/ses-*/func)] (1)
    │  ├─ sub-01/
    │  │  ├─ anat/  
    │  │  │  ├─ *T1*.nii 
    │  │  │  └─ *T1*.nii derivatives
-   │  │  └─ func/    <----------- [Select the FUNC subfolder for the first subject]  (2)
+   │  │  └─ func/    <----------- [Select the FUNC subfolder for the first subject] (2)
    │  │     ├─ sess-01/
    │  │     │  ├─ Unprocessed functional files (*.nii)
    │  │     │  └─ Preprocessed functional files (*.nii):
@@ -151,7 +152,7 @@ needs to be changed to ``project/nifti`` — the parent folder with ``FUNC`` sub
    │  │     │     • unsmoothed + normalized + realigned  <----- [Apply text filter] (3)
    │  │     └─ sess-02/ ...
    │  └─ sub-02/ ...
-   └─ firstlevel-spm/  <-- [Parent folder with FUNC subfolders (BY DEFAULT)](Needs to be changed!)
+   └─ firstlevel-spm/ <----------[Parent folder (BY DEFAULT)](Needs to be changed!)
       ├─ sub-01/   <------------------------------------- [Selected subject folder]
       │  ├─ GLM-01/
       │  │  ├─ SPM.mat   <--------------------------------- [Selected SPM.mat file]
