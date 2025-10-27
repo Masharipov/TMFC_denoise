@@ -2,7 +2,7 @@ References
 ==========
 
 Please cite **TMFC_denoise** as:
- - Ruslan Masharipov. (2025). TMFC denoise (v1.4.2) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.17176264
+ - Ruslan Masharipov. (2025). TMFC denoise (v1.4.3) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.17176264
  - <Toolbox paper in review...>
 
 If you use the **TMFC toolbox**, please cite:

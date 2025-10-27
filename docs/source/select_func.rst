@@ -28,7 +28,23 @@ This subfolder may include multiple session-specific subfolders (e.g., sess-01, 
 Third, apply a text filter (e.g., *war*.nii) to match all unsmoothed images. 
 Images can be either ``*.img``/``*.hdr`` (3D) or ``*.nii`` (3D/4D). The ``*.nii.gz`` format is not supported.
 
-If the GLMs were already specified for unsmoothed images, simply press: :menuselection:`Preserve functional image paths from the SPM.mat files`
+**NOTE:** You can also try applying the text filter without changing folders.
+
+  • If you do NOT select a new parent folder (FUNC root), the toolbox will
+    use the same parent directory as the STAT folder (SPM.mat).
+
+  • If you do NOT select a FUNC subfolder for the first subject, the toolbox
+    will attempt to use the same relative structure as in SPM.xY.VY paths.
+
+In both cases, the search will be performed automatically using paths
+derived from the original SPM.mat configuration, so it may still find the
+correct functional files — provided their locations have not changed.
+
+Sessions/runs:
+• Layout sub-01/func/sess-* → select func as the FUNC subfolder.
+• Layout sub-01/ses-*/func → leave the subfolder unselected (or select the subject folder); the toolbox will resolve each session/run automatically.
+
+If the GLMs were **already specified for unsmoothed images**, simply press: :menuselection:`Preserve functional image paths from the SPM.mat files`
 
 To open *Select functional images* GUI independently of the main ``TMFC_denoise`` function, run::
     
@@ -74,7 +90,7 @@ Example 2 — BIDS-like Folder Structure
 --------------------------------------
 
 1. Select the parent folder that contains all subject folders with ``FUNC`` subfolders (if necessary).  
-2. Select the ``FUNC`` subfolder for the first subject and apply text filter (e.g., ``*war*.nii``, ``*wr*.nii``, or ``*preproc*.nii.gz``) to match all fMRI images.
+2. Apply text filter (e.g., ``*war*.nii``, ``*wr*.nii``, or ``*preproc*.nii.gz``) to match all fMRI images.
 
 Here, the default parent folder ``project/derivatives/firstlevel-spm`` (with ``STAT`` subfolders) 
 needs to be changed to ``project/derivatives/fmriprep`` — the parent folder with ``FUNC`` subfolders.
@@ -92,11 +108,11 @@ needs to be changed to ``project/derivatives/fmriprep`` — the parent folder wi
    └── derivatives/
        ├── fmriprep/   <-------------- [Select parent folder (contains sub-*/ses-*/func)] (1)
        │   ├── sub-01/
-       │   │   ├── ses-01/
-       │   │   │   └── func/  <-------- [Select the FUNC subfolder for the first subject] (2)
+       │   │   ├── ses-01/   
+       │   │   │   └── func/ 
        │   │   │       └── Preprocessed functional files:
        │   │   │           • smoothed + normalized + realigned
-       │   │   │           • unsmoothed + normalized + realigned <--- [Apply text filter] (3)
+       │   │   │           • unsmoothed + normalized + realigned <--- [Apply text filter] (2)
        │   │   └── ses-02/ ...
        │   └── sub-02/ ...
        └── firstlevel-spm/  <--- [Parent folder with FUNC (BY DEFAULT)](Needs to be changed!)

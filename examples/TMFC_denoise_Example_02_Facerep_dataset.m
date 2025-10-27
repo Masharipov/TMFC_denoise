@@ -69,9 +69,9 @@ end
 func_subfolder = 'RawEPI';
 for iSub = 1:length(SPM_paths)
     func_files = spm_select('ExtList', fullfile(data_path,['sub-' sprintf('%02d', iSub)],func_subfolder), '^wars.*\.img$');
-    for iScan = 1:length(func_files)
-        func_paths.fname{iScan,1} = fullfile(data_path,['sub-' sprintf('%02d', iSub)], ...
-            func_subfolder,deblank(func_files(iScan,:)));  % Paths to functional images
+    for jScan = 1:length(func_files)
+        func_paths(iSub).fname{jScan,1} = fullfile(data_path,['sub-' sprintf('%02d', iSub)], ...
+            func_subfolder,deblank(func_files(jScan,:)));  % Paths to functional images
     end
 end
 
