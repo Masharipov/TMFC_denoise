@@ -3,13 +3,13 @@
 HMP expansions and FD plots
 ===========================
 
-The function ``tmfc_head_motion`` calculates HMP expansions and the FD time series. 
+The function ``tmfc_head_motion`` calculates HMP expansions and the FD time series. Also calculates task-FD correlations.
 It is called automatically by the main function ``TMFC_denoise`` or can be run manually::
 
     FD = tmfc_head_motion(SPM_paths,subject_paths,options);
 
 The outputs are saved in the ``TMFC_denoise`` subfolder within each subject’s first-level GLM directory: ``12HMP.mat``, ``24HMP.mat``, and ``FD.mat``. 
-The ``FD.mat`` file contains FD time series for each session, session-wise mean and maximum FD values, and mean/max FD across all sessions:
+The ``FD.mat`` file contains FD time series for each session, session-wise mean and maximum FD values, session-wise task-FD correlations, and mean/max FD across all sessions:
 
 .. list-table:: FD.mat file
    :header-rows: 1
@@ -25,13 +25,22 @@ The ``FD.mat`` file contains FD time series for each session, session-wise mean 
      - Session-wise FD data:
 
        - **FD_ts:** FD time-series per session
-       - **mean:** Mean FD per session
-       - **max:** Max FD per session
+       - **FD_mean:** Mean FD per session
+       - **FD_max:** Max FD per session
+       - **taskFD_corr_mean:** Mean task-FD correlation per session
+       - **taskFD_corr_maxabs:** Maximum abs(task-FD correlation) per session
+       - **taskFD_corr_maxabs_name:** Name of the corresponding task condition
 
    * - FD_mean
      - Mean FD across all sessions.
    * - FD_max
      - Max FD across all sessions.
+   * - taskFD_corr_mean
+     - Mean task-FD correlation across all sessions.
+   * - taskFD_corr_maxabs
+     - Maximum abs(task-FD correlation) across all sessions.
+   * - taskFD_corr_maxabs_name
+     - Name of the corresponding task condition.
 
 Framewise Displacement Plot 
 ---------------------------

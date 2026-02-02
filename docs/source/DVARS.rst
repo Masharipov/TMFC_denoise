@@ -8,7 +8,7 @@ It is called automatically by the main function ``TMFC_denoise`` if the user has
 
 The outputs are saved in ``TMFC_denoise/[WM*e*]_[CSF*e*]_[GM*d*]`` subfolders:
 
- - ``DVARS_before_denoising.mat`` – contains DVARS time series for each session before noise regression, session-wise FD-DVARS correlations, and mean/max FD-DVARS correlation across sessions. 
+ - ``DVARS_before_denoising.mat`` – contains DVARS time series for each session before noise regression, session-wise FD-DVARS and task-DVARS correlations, and mean/max FD-DVARS (and task-DVARS) correlation across sessions. 
  - ``DVARS_*.mat`` – contains the same information as the previous file, but after noise regression. Filenames encode the selected denoising options (e.g., ``DVARS_[24HMP]_[aCompCor50]_[rWLS].mat``).
 
 ----
@@ -62,16 +62,22 @@ Pressing the :menuselection:`Save` button stores individual subject FD and DVARS
    * - postDVARS (struct)
      - DVARS data for each subject (after denoising).
 
-       - **Sess:** Incluse DVARS time series and FD-DVARS correlation for each session. 
+       - **Sess:** Incluse DVARS time series, FD-DVARS and task-DVARS correlations for each session. 
        - **Mean_FD_DVARS_corr:** Mean FD-DVARS correlation across sessions. 
        - **Max_FD_DVARS_corr:** Maximum FD-DVARS correlation across sessions. 
+       - **taskDVARS_corr_mean:** Mean task-DVARS correlation across sessions. 
+       - **taskDVARS_corr_maxabs:** Maximum abs(task-DVARS correlation) across sessions. 
+       - **taskDVARS_corr_maxabs_name:** Name of the corresponding task condition.
 
    * - preDVARS (struct)
      - DVARS data for each subject (before denoising).
 
-       - **Sess:** Incluse DVARS time series and FD-DVARS correlation for each session. 
+       - **Sess:** Incluse DVARS time series, FD-DVARS and task-DVARS correlations for each session. 
        - **Mean_FD_DVARS_corr:** Mean FD-DVARS correlation across sessions. 
-       - **Max_FD_DVARS_corr:** Maximum FD-DVARS correlation across sessions. 
+       - **Max_FD_DVARS_corr:** Maximum FD-DVARS correlation across sessions.
+       - **taskDVARS_corr_mean:** Mean task-DVARS correlation across sessions. 
+       - **taskDVARS_corr_maxabs:** Maximum abs(task-DVARS correlation) across sessions. 
+       - **taskDVARS_corr_maxabs_name:** Name of the corresponding task condition.       
 
 These values can be reported to demonstrate the effectiveness of noise regression. 
 If denoising is successful, spikes in the DVARS time series at high-motion time points should be reduced, and the FD-DVARS correlation should approach zero.

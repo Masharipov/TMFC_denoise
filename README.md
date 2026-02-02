@@ -41,7 +41,7 @@ TMFC_denoise can be run via GUI or the command line. To run TMFC_denoise via the
 
 - (2) Calculates **framewise displacement (FD)** as the sum of the absolute values
      of the derivatives of translational and rotational motion parameters
-     (Power et al., 2012).
+     (Power et al., 2012). Also computes **task-FD correlations**.
 
 - (3) Creates spike regressors based on a user-defined FD threshold (**Spike Regression**). For each
      flagged time point, a unit impulse function is included in the general linear
@@ -65,7 +65,7 @@ TMFC_denoise can be run via GUI or the command line. To run TMFC_denoise via the
 
 - (8) Calculates **DVARS** (Derivative of root mean square VARiance over voxelS), defined as the
      RMS of the differentiated BOLD time series within the GM mask (Muschelli et al., 2014).
-     Also computes **FD-DVARS correlations**. 
+     Also computes **FD-DVARS correlations** and **task-DVARS correlations**. 
      DVARS is computed both before and after noise regression 
      (for the original and updated GLM, respectively).
 
